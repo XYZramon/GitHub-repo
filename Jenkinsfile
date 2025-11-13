@@ -25,10 +25,15 @@ pipeline {
         stage('Run Tests') {
             steps {
                 sh '''
-                # Activate venv and run pytest
-                . .venv/bin/activate
-                pytest -q
-                '''
+        	# Activate virtual environment
+        	. .venv/bin/activate
+
+        	# Add repo root to PYTHONPATH so "app" can be imported
+        	export PYTHONPATH=$(pwd)
+
+        	# Run tests
+        	pytest -q
+        	'''
             }
         }
     }
